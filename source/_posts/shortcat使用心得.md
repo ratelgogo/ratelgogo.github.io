@@ -1,7 +1,8 @@
 ---
 title: shortcat使用心得
 date: 2017-06-13 15:22:21
-tags: 
+categories: mac
+tags:
     - shortcat
     - 效率工具
     - 键盘

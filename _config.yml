@@ -79,3 +79,13 @@ deploy:
   type: git
   repo: git@github.com:ratelgogo/ratelgogo.github.io
   branch: master
+ 
+
+# algolia
+algolia:
+  applicationID: 'TSKSBB6QJI'
+  apiKey: 'feb3eea400a654147c9179ecb02ddd69'
+  adminApiKey: '80384a9dfcfdf0a0a53a0767c627e47d'
+  indexName: 'hexo'
+  chunkSize: 5000
+
