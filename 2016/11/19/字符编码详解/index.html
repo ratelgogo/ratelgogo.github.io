@@ -1,0 +1,1039 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next muse use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.3" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.3">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.3">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.3">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.3" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="unicode,ASCII," />
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="原文出处:Justin Huang 的博客(@Justin_Programer)  基本常识1.位和字节位（bit）是指计算机里存放的二进制值(0/1)，而8个位组合成的“位串”称为一个字节，容易算出，8个位的组合有256个组合方式，其取值范围是“00000000-11111111”，常用十六进制来表示。比如“0100">
+<meta name="keywords" content="unicode,ASCII">
+<meta property="og:type" content="article">
+<meta property="og:title" content="字符编码详解">
+<meta property="og:url" content="https://ratelgogo.github.io/2016/11/19/字符编码详解/index.html">
+<meta property="og:site_name" content="拾言堂">
+<meta property="og:description" content="原文出处:Justin Huang 的博客(@Justin_Programer)  基本常识1.位和字节位（bit）是指计算机里存放的二进制值(0/1)，而8个位组合成的“位串”称为一个字节，容易算出，8个位的组合有256个组合方式，其取值范围是“00000000-11111111”，常用十六进制来表示。比如“01000001”就是一个字节，其对应的十六进制值为“0x41”。而我们通常所讲的字符">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:updated_time" content="2017-11-20T13:04:45.960Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="字符编码详解">
+<meta name="twitter:description" content="原文出处:Justin Huang 的博客(@Justin_Programer)  基本常识1.位和字节位（bit）是指计算机里存放的二进制值(0/1)，而8个位组合成的“位串”称为一个字节，容易算出，8个位的组合有256个组合方式，其取值范围是“00000000-11111111”，常用十六进制来表示。比如“01000001”就是一个字节，其对应的十六进制值为“0x41”。而我们通常所讲的字符">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Muse',
+    version: '5.1.3',
+    sidebar: {"position":"left","display":"hide","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: 'TSKSBB6QJI',
+      apiKey: 'feb3eea400a654147c9179ecb02ddd69',
+      indexName: 'hexo',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="https://ratelgogo.github.io/2016/11/19/字符编码详解/"/>
+
+
+
+
+
+  <title>字符编码详解 | 拾言堂</title>
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">拾言堂</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">朝花不待夕拾</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br />
+            
+            搜索
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  
+  <div class="algolia-popup popup search-popup">
+    <div class="algolia-search">
+      <div class="algolia-search-input-icon">
+        <i class="fa fa-search"></i>
+      </div>
+      <div class="algolia-search-input" id="algolia-search-input"></div>
+    </div>
+
+    <div class="algolia-results">
+      <div id="algolia-stats"></div>
+      <div id="algolia-hits"></div>
+      <div id="algolia-pagination" class="algolia-pagination"></div>
+    </div>
+
+    <span class="popup-btn-close">
+      <i class="fa fa-times-circle"></i>
+    </span>
+  </div>
+
+
+
+
+    </div>
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://ratelgogo.github.io/2016/11/19/字符编码详解/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="张若凡">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="http://ww2.sinaimg.cn/mw690/71d9c3dcgw1faq6ou2207j20qo0zkdj6.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="拾言堂">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">字符编码详解</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2016-11-19T14:34:20+08:00">
+                2016-11-19
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+             <span id="/2016/11/19/字符编码详解/" class="leancloud_visitors" data-flag-title="字符编码详解">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">阅读次数&#58;</span>
+               
+                 <span class="leancloud-visitors-count"></span>
+             </span>
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <blockquote>
+<p>原文出处:<a href="http://sharecore.net/blog/2014/08/10/zi-fu-bian-ma-chang-shi-ji-wen-ti-jie-xi/" target="_blank" rel="noopener">Justin Huang 的博客(@Justin_Programer)</a></p>
+</blockquote>
+<h1 id="基本常识"><a href="#基本常识" class="headerlink" title="基本常识"></a>基本常识</h1><h3 id="1-位和字节"><a href="#1-位和字节" class="headerlink" title="1.位和字节"></a>1.位和字节</h3><p>位（bit）是指计算机里存放的二进制值(0/1)，而8个位组合成的“位串”称为一个字节，容易算出，8个位的组合有256个组合方式，其取值范围是“00000000-11111111”，常用十六进制来表示。比如“01000001”就是一个字节，其对应的十六进制值为“0x41”。<br>而我们通常所讲的字符编码，就是指定义一套规则，将真实世界里的字母/字符与计算机的二进制序列进行相互转化。如我们可以针对上面的字节定义如下的转换规则：<br><code>01000001（0x41）&lt;-&gt; 65 &lt;-&gt; A</code><br>即用字位序<code>01000001</code>来表示字母<code>A</code>。<br><a id="more"></a></p>
+<h3 id="2-拉丁字符"><a href="#2-拉丁字符" class="headerlink" title="2.拉丁字符"></a>2.拉丁字符</h3><p>拉丁字符是当今世界使用最广泛的符号了。通常我们说的拉丁字母，指的的是基础拉丁字母,即指常见的”ABCD“等26个英文字母，这些字母与英语中一些常见的符号（如数字，标点符号）称为基础拉丁字符，这些基础拉丁字符在使用英语的国家广为流行，当然在中国，也被用来当作汉语拼音使用。在欧洲其它一些非英语国家，为满足其语言需要，在基础拉丁字符的基础上，加上一些连字符，变音字符(如<code>Á</code>)，形成了派生拉丁字母，其表示的字符范围在各种语言有所不同，而完整意义上的拉丁字符是指这些变体字符与基础拉丁字符的全集。是比基础拉丁字符集大很多的一个集合。</p>
+<hr>
+<h1 id="编码标准"><a href="#编码标准" class="headerlink" title="编码标准"></a>编码标准</h1><h2 id="1-拉丁编码"><a href="#1-拉丁编码" class="headerlink" title="1.拉丁编码"></a>1.拉丁编码</h2><p>ASCII的全称是American Standard Code for Information Interchange（美国信息交换标准代码）。顾名思义，这是现代计算机的发明国美国人设计的标准，而美国是一个英语国家，他们设定的ASCII编码也只支持基础拉丁字符。ASCII的设计也很简单，用一个字节（8个位）来表示一个字符，并保证最高位的取值永远为’0’。即表示字符含义的位数为7位，不难算出其可表达字符数为27 =128个。这128个字符包括95个可打印的字符（涵盖了26个英文字母的大小写以及英文标点符号能）与33个控制字符（不可打印字符）。例如下表，就是几个简单的规则对应:</p>
+<table>
+<thead>
+<tr>
+<th><em>字符类型</em></th>
+<th><em>字符</em></th>
+<th><em>二进制</em></th>
+<th><em>16进制</em></th>
+<th><em>10进制</em></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>可打印字符</td>
+<td><code>A</code></td>
+<td><code>01000001</code></td>
+<td><code>0x41</code></td>
+<td><code>65</code></td>
+</tr>
+<tr>
+<td>可打印字符</td>
+<td><code>a</code></td>
+<td><code>01100001</code></td>
+<td><code>0x61</code></td>
+<td><code>97</code></td>
+</tr>
+<tr>
+<td>控制字符</td>
+<td><code>\r</code></td>
+<td><code>00001101</code></td>
+<td><code>0x0D</code></td>
+<td><code>13</code></td>
+</tr>
+<tr>
+<td>控制字符</td>
+<td><code>\n</code></td>
+<td><code>00001010</code></td>
+<td><code>0xA</code></td>
+<td><code>10</code></td>
+</tr>
+</tbody>
+</table>
+<hr>
+<p>ASCII是美国人设计的，只能支持基础拉丁字符，而当计算机发展到欧洲，欧洲其它不只是用的基础拉丁字符的国家（即用更大的派生拉丁字符集）该怎么办呢？</p>
+<p>当然，最简单的办法就是将美国人没有用到的第8位也用上就好了，这样能表达的字符个数就达到了28 =256个，相比较原来，增长了一倍， 这个编码规则也常被称为<code>EASCII</code>。<code>EASCII</code>基本解决了整个西欧的字符编码问题。但是对于欧洲其它地方如北欧，东欧地区，256个字符还是不够用，如是出现了<code>ISO 8859</code>,为解决256个字符不够用的问题，<code>ISO8859</code>采取的不再是单个独立的编码规则，而是由一系列的字符集（共15个）所组成，分别称为<code>ISO8859-n</code>(n=1,2,3…11,13…16,没有12)。其每个字符集对应不同的语言,如<code>ISO 8859-1</code>对应西欧语言，<code>ISO 8859-2</code>对应中欧语言等。其中大家所熟悉的<code>Latin-1</code>就是<code>ISO8859-1</code>的别名,它表示整个西欧的字符集范围。需要注意的一点的是，<code>ISO8859-n</code>与<code>ASCII</code>是兼容的，即其<code>0000000(0x00)-01111111(0x7f)</code>范围段与ASCII保持一致，而<code>10000000（0x80）-11111111(0xFF)</code>范围段被扩展用到不同的字符集。</p>
+<h2 id="2-中文编码"><a href="#2-中文编码" class="headerlink" title="2.中文编码"></a>2.中文编码</h2><p>以上我们接触到的拉丁编码，都是单字节编码，即用一个字节来对应一个字符。但这一规则对于其它字符集更大的语言来说，并不适应，比如中文，而是出现了用多个字节表示一个字符的编码规则。常见的中文<code>GB2312</code>（国家简体中文字符集）就是用两个字节来表示一个汉字（注意是表示一个汉字，对于拉丁字母，<code>GB2312</code>还是是用一个字节来表示以兼容<code>ASCII</code>）。我们用下表来说明各中文编码之间的规则和兼容性。</p>
+<table>
+<thead>
+<tr>
+<th><br></th>
+<th><em>GB2312</em></th>
+<th><em>BIG5</em></th>
+<th><em>GBK</em></th>
+<th><em>GB18030</em></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>作用</td>
+<td>国家简体中文字符集</td>
+<td>统一繁体字符集</td>
+<td>GB2312的扩展，加入对繁体字的支持</td>
+<td>中日韩文字编码</td>
+</tr>
+<tr>
+<td>字节数</td>
+<td>变字节:<br>1字节-兼容ASCII<br>2字节-汉字</td>
+<td>2字节</td>
+<td>2字节</td>
+<td>变字节:<br>1字节-兼容ASCII<br>2字节，4字节</td>
+</tr>
+<tr>
+<td>范围</td>
+<td>7445字符，6763汉字</td>
+<td>21886字符</td>
+<td>21886字符</td>
+<td>27484字符</td>
+</tr>
+<tr>
+<td>兼容性</td>
+<td>兼容ASCII</td>
+<td>兼容ASCII但和GB2312冲突</td>
+<td>兼容GB2312</td>
+<td>兼容GB2312</td>
+</tr>
+</tbody>
+</table>
+<hr>
+<p>对于中文编码，其规则实现上是很简单的，一般都是简单的字符查表即可，重要的是要注意其相互之间的兼容性问题。如如果选择BIG5字符集编码，就不能很好的兼容GB2312，当做繁转简时有可能导致个别字的冲突与不一致，但是GBK与GB2312之间就不存在这样的问题。</p>
+<h2 id="3-Unicode"><a href="#3-Unicode" class="headerlink" title="3.Unicode"></a>3.Unicode</h2><p>针对不同的语言采用不同的编码，有可能导致冲突与不兼容性，如果我们打开一份字节序文件，如果不知道其编码规则，就无法正确解析其语义，这也是产生乱码的根本原因。有没有一种规则是全世界字符统一的呢？当然有，<code>Unicode</code>就是一种。为了能独立表示世界上所有的字符，<code>Unicode</code>采用4个字节表示一个字符,这样理论上<code>Unicode</code>能表示的字符数就达到了2^31= 2147483648 = 21 亿左右个字符，完全可以涵盖世界上一切语言所用的符号。我们以汉字”微信“两字举例说明：</p>
+<blockquote>
+<p>微 &lt;-&gt; <code>\u5fae</code> &lt;-&gt; <code>00000000 00000000 01011111 10101110</code><br>信 &lt;-&gt; <code>\u4fe1</code> &lt;-&gt; <code>00000000 00000000 01001111 11100001</code></p>
+</blockquote>
+<p>容易从上面的例子里看出，Unicode对所有的字符编码均需要四个字节，而这对于拉丁字母或汉字来说是浪费的，其前面三个或两个字节均是0,这对信息存储来说是极大的浪费。另外一个问题就是，如何区分Unicode与其它编码这也是一个问题，比如计算机怎么知道四个字节表示一个Unicode中的字符，还是分别表示四个ASCII的字符呢？</p>
+<hr>
+<p>以上两个问题，困扰着<code>Unicode</code>，让<code>Unicode</code>的推广上一直面临着困难。直至<code>UTF-8</code>作为<code>Unicode</code>的一种实现后，部分问题得到解决，才得以完成推广使用。说到此，我们可以回答文章一开始提出的问题了，<code>UTF-8</code>是<code>Unicode</code>的一种实现方式，而<code>Unicode</code>是一个统一标准规范，<code>Unicode</code>的实现方式除了<code>UTF-8</code>还有其它的，比如<code>UTF-16</code>等。</p>
+<p>话说当初大牛<em>Ben Thomson</em>吃饭时，在一张餐巾纸上，设计出了<code>UTF-8</code>，然后回到房间，实现了第一版的<code>UTF-8</code>。关于<code>UTF-8</code>的基本规则，其实简单来说就两条（来自阮一峰老师的总结）:</p>
+<p>规则1：对于单字节字符，字节的第一位为<code>0</code>，后7位为这个符号的<code>Unicode</code>码，所以对于拉丁字母，<code>UTF-8</code>与<code>ASCII</code>码是一致的。</p>
+<p>规则2：对于<code>n</code>字节(<code>n&gt;1</code>)的字符，第一个字节前<code>n</code>位都设为<code>1</code>，第<code>n+1</code>位为<code>0</code>，后面字节的前两位一律设为<code>10</code>，剩下没有提及的位，全部为这个符号的<code>Unicode</code>编码。</p>
+<p>通过，根据以上规则，可以建立一个Unicode取值范围与UTF-8字节序表示的对应关系，如下表:</p>
+<table>
+<thead>
+<tr>
+<th><em>Unicode字符范围（十六进制）</em></th>
+<th><em>UTF-8编码方式（二进制）</em></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>单字节:<code>0000 0000-0000 007F</code></td>
+<td><code>0xxxxxxx</code></td>
+</tr>
+<tr>
+<td>双字节:<code>0000 0080-0000 07FF</code></td>
+<td><code>110xxxxx 10xxxxxx</code></td>
+</tr>
+<tr>
+<td>三字节:<code>0000 0800-0000 FFFF</code></td>
+<td><code>1110xxxx 10xxxxxx 10xxxxxx</code></td>
+</tr>
+<tr>
+<td>四字节:<code>0001 0000-0010 FFFF</code></td>
+<td><code>11110xxx 10xxxxxx 10xxxxxx 10xxxxxx</code></td>
+</tr>
+</tbody>
+</table>
+<hr>
+<p>举例来说，’微’的Unicode是<code>\u5fae</code>，二进制表示是<code>00000000 00000000 01011111 10101110</code>，其取值就位于<code>0000 0800-0000 FFFF</code>之间，所以其<code>UTF-8</code>编码为<code>11100101 10111110 10101110</code>。</p>
+<p>通过以上简单规则，<code>UTF-8</code>采取变字节的方式，解决了我们前文提到的关于<code>Unicode</code>的两大问题。同时，作为中文使用者需要注意的一点是<strong><code>Unicode(UTF-8)</code>与<code>GBK</code>，<code>GB2312</code>这些汉字编码规则是完全不兼容的，也就是说这两者之间不能通过任何算法来进行转换,如需转换，一般通过<code>GBK</code>查表的方式来进行。</strong></p>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/unicode/" rel="tag"># unicode</a>
+          
+            <a href="/tags/ASCII/" rel="tag"># ASCII</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2016/11/19/chmod命令/" rel="next" title="chmod命令">
+                <i class="fa fa-chevron-left"></i> chmod命令
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2016/11/23/linux常用命令/" rel="prev" title="linux常用命令">
+                linux常用命令 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+    <div class="comments" id="comments">
+      <div id="lv-container" data-id="city" data-uid="MTAyMC8yOTE4Ny81NzU0"></div>
+    </div>
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image"
+                src="http://ww2.sinaimg.cn/mw690/71d9c3dcgw1faq6ou2207j20qo0zkdj6.jpg"
+                alt="张若凡" />
+            
+              <p class="site-author-name" itemprop="name">张若凡</p>
+              <p class="site-description motion-element" itemprop="description">少说，多做，多思考</p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">15</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">3</span>
+                  <span class="site-state-item-name">分类</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">20</span>
+                  <span class="site-state-item-name">标签</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+
+          <div class="links-of-author motion-element">
+            
+              
+                <span class="links-of-author-item">
+                  <a href="https://github.com/ratelgogo" target="_blank" title="GitHub">
+                    
+                      <i class="fa fa-fw fa-github"></i>GitHub</a>
+                </span>
+              
+                <span class="links-of-author-item">
+                  <a href="https://twitter.com/afisheatcat" target="_blank" title="Twitter">
+                    
+                      <i class="fa fa-fw fa-twitter"></i>Twitter</a>
+                </span>
+              
+            
+          </div>
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#基本常识"><span class="nav-number">1.</span> <span class="nav-text">基本常识</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-位和字节"><span class="nav-number">1.0.1.</span> <span class="nav-text">1.位和字节</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-拉丁字符"><span class="nav-number">1.0.2.</span> <span class="nav-text">2.拉丁字符</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#编码标准"><span class="nav-number">2.</span> <span class="nav-text">编码标准</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#1-拉丁编码"><span class="nav-number">2.1.</span> <span class="nav-text">1.拉丁编码</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-中文编码"><span class="nav-number">2.2.</span> <span class="nav-text">2.中文编码</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#3-Unicode"><span class="nav-number">2.3.</span> <span class="nav-text">3.Unicode</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2018</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">张若凡</span>
+
+  
+</div>
+
+
+
+
+
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.3"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.3"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.3"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.3"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.3"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+    <script type="text/javascript">
+      (function(d, s) {
+        var j, e = d.getElementsByTagName(s)[0];
+        if (typeof LivereTower === 'function') { return; }
+        j = d.createElement(s);
+        j.src = 'https://cdn-city.livere.com/js/embed.dist.js';
+        j.async = true;
+        e.parentNode.insertBefore(j, e);
+      })(document, 'script');
+    </script>
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+  
+  
+  
+  <link rel="stylesheet" href="/lib/algolia-instant-search/instantsearch.min.css">
+
+  
+  
+  <script src="/lib/algolia-instant-search/instantsearch.min.js"></script>
+  
+
+  <script src="/js/src/algolia-search.js?v=5.1.3"></script>
+
+
+
+  
+
+  
+  <script src="https://cdn1.lncld.net/static/js/av-core-mini-0.6.4.js"></script>
+  <script>AV.initialize("hc1YRsjWdTcN3etCegGgnkIW-gzGzoHsz", "3pMUaChp8kHnJ8rKlbks5f0I");</script>
+  <script>
+    function showTime(Counter) {
+      var query = new AV.Query(Counter);
+      var entries = [];
+      var $visitors = $(".leancloud_visitors");
+
+      $visitors.each(function () {
+        entries.push( $(this).attr("id").trim() );
+      });
+
+      query.containedIn('url', entries);
+      query.find()
+        .done(function (results) {
+          var COUNT_CONTAINER_REF = '.leancloud-visitors-count';
+
+          if (results.length === 0) {
+            $visitors.find(COUNT_CONTAINER_REF).text(0);
+            return;
+          }
+
+          for (var i = 0; i < results.length; i++) {
+            var item = results[i];
+            var url = item.get('url');
+            var time = item.get('time');
+            var element = document.getElementById(url);
+
+            $(element).find(COUNT_CONTAINER_REF).text(time);
+          }
+          for(var i = 0; i < entries.length; i++) {
+            var url = entries[i];
+            var element = document.getElementById(url);
+            var countSpan = $(element).find(COUNT_CONTAINER_REF);
+            if( countSpan.text() == '') {
+              countSpan.text(0);
+            }
+          }
+        })
+        .fail(function (object, error) {
+          console.log("Error: " + error.code + " " + error.message);
+        });
+    }
+
+    function addCount(Counter) {
+      var $visitors = $(".leancloud_visitors");
+      var url = $visitors.attr('id').trim();
+      var title = $visitors.attr('data-flag-title').trim();
+      var query = new AV.Query(Counter);
+
+      query.equalTo("url", url);
+      query.find({
+        success: function(results) {
+          if (results.length > 0) {
+            var counter = results[0];
+            counter.fetchWhenSave(true);
+            counter.increment("time");
+            counter.save(null, {
+              success: function(counter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(counter.get('time'));
+              },
+              error: function(counter, error) {
+                console.log('Failed to save Visitor num, with error message: ' + error.message);
+              }
+            });
+          } else {
+            var newcounter = new Counter();
+            /* Set ACL */
+            var acl = new AV.ACL();
+            acl.setPublicReadAccess(true);
+            acl.setPublicWriteAccess(true);
+            newcounter.setACL(acl);
+            /* End Set ACL */
+            newcounter.set("title", title);
+            newcounter.set("url", url);
+            newcounter.set("time", 1);
+            newcounter.save(null, {
+              success: function(newcounter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(newcounter.get('time'));
+              },
+              error: function(newcounter, error) {
+                console.log('Failed to create');
+              }
+            });
+          }
+        },
+        error: function(error) {
+          console.log('Error:' + error.code + " " + error.message);
+        }
+      });
+    }
+
+    $(function() {
+      var Counter = AV.Object.extend("Counter");
+      if ($('.leancloud_visitors').length == 1) {
+        addCount(Counter);
+      } else if ($('.post-title-link').length > 1) {
+        showTime(Counter);
+      }
+    });
+  </script>
+
+
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>
