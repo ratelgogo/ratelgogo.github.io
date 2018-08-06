@@ -88,7 +88,8 @@
 <meta property="og:description" content="由于我的MacBook pro 接着显示器，显示器上有声音输出，而且又使用了boom2软件，当我插入耳机打算听音乐的时候每次都需要选择声音的输出，真的是很麻烦，我打算把这个转换输出的操作自动化。  目标：每次当audio有变化时，选择耳机选项，如果没有耳机选择则什么都不做。  用AppleScript实现如下： 12345678910111213141516171819202122tell app">
 <meta property="og:locale" content="zh-Hans">
 <meta property="og:image" content="https://ws1.sinaimg.cn/large/71d9c3dcgy1fu0cgc2wzvj210y0rmgoc">
-<meta property="og:updated_time" content="2018-08-06T14:24:22.006Z">
+<meta property="og:image" content="https://ws1.sinaimg.cn/large/71d9c3dcgy1fu0cq1mnb9j20rm0y67al">
+<meta property="og:updated_time" content="2018-08-06T14:30:57.484Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="自动选择声音输出">
 <meta name="twitter:description" content="由于我的MacBook pro 接着显示器，显示器上有声音输出，而且又使用了boom2软件，当我插入耳机打算听音乐的时候每次都需要选择声音的输出，真的是很麻烦，我打算把这个转换输出的操作自动化。  目标：每次当audio有变化时，选择耳机选项，如果没有耳机选择则什么都不做。  用AppleScript实现如下： 12345678910111213141516171819202122tell app">
@@ -380,6 +381,9 @@
 <p>脚本的难点是判断Headphones选项，<code>exists (row 1 where value of text field 1 is &quot;Headphones&quot;)</code> </p>
 <p><img src="https://ws1.sinaimg.cn/large/71d9c3dcgy1fu0cgc2wzvj210y0rmgoc" alt=""></p>
 <p>苹果的选择区域分别为scroll area  -&gt; table  -&gt; row -&gt; text field</p>
+<p>具体的操作实现了，还剩下触发事件。</p>
+<p>这个时候就要用到keyboard Masetro了,选择一个trigger <code>The audio output device changes</code>再执行上面的脚本，搞定！</p>
+<p><img src="https://ws1.sinaimg.cn/large/71d9c3dcgy1fu0cq1mnb9j20rm0y67al" alt=""></p>
 
       
     </div>
