@@ -290,6 +290,944 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://ratelgogo.github.io/2018/08/06/自动选择声音输出/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="张若凡">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="http://ww2.sinaimg.cn/mw690/71d9c3dcgw1faq6ou2207j20qo0zkdj6.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="拾言堂">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2018/08/06/自动选择声音输出/" itemprop="url">自动选择声音输出</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-08-06T21:27:42+08:00">
+                2018-08-06
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+             <span id="/2018/08/06/自动选择声音输出/" class="leancloud_visitors" data-flag-title="自动选择声音输出">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">阅读次数&#58;</span>
+               
+                 <span class="leancloud-visitors-count"></span>
+             </span>
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p>由于我的MacBook pro 接着显示器，显示器上有声音输出，而且又使用了boom2软件，当我插入耳机打算听音乐的时候每次都需要选择声音的输出，真的是很麻烦，我打算把这个转换输出的操作自动化。</p>
+<blockquote>
+<p>目标：每次当audio有变化时，选择耳机选项，如果没有耳机选择则什么都不做。</p>
+</blockquote>
+<p>用AppleScript实现如下：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line">tell application &quot;System Preferences&quot;</span><br><span class="line">	activate</span><br><span class="line">	set current pane to pane &quot;com.apple.preference.sound&quot;</span><br><span class="line">end tell</span><br><span class="line"></span><br><span class="line">tell application &quot;System Events&quot;</span><br><span class="line">	tell application process &quot;System Preferences&quot;</span><br><span class="line">		repeat until exists tab group 1 of window &quot;Sound&quot;</span><br><span class="line">		end repeat</span><br><span class="line">		tell tab group 1 of window &quot;Sound&quot;</span><br><span class="line">			click radio button &quot;Output&quot;</span><br><span class="line">			tell table 1 of scroll area 1</span><br><span class="line">				if (exists (row 1 where value of text field 1 is &quot;Headphones&quot;)) then</span><br><span class="line">					display notification &quot;change output to Headphones&quot;</span><br><span class="line">					select (row 1 where value of text field 1 is &quot;Headphones&quot;)</span><br><span class="line">				else</span><br><span class="line">					display notification &quot;not change any output&quot;</span><br><span class="line">				end if</span><br><span class="line">			end tell</span><br><span class="line">		end tell</span><br><span class="line">	end tell</span><br><span class="line">end tell</span><br></pre></td></tr></table></figure>
+<p>脚本的难点是判断Headphones选项，<code>exists (row 1 where value of text field 1 is &quot;Headphones&quot;)</code> </p>
+<p><img src="https://ws1.sinaimg.cn/large/71d9c3dcgy1fu0cgc2wzvj210y0rmgoc" alt=""></p>
+<p>苹果的选择区域分别为scroll area  -&gt; table  -&gt; row -&gt; text field</p>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://ratelgogo.github.io/2018/02/25/gradle版本冲突/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="张若凡">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="http://ww2.sinaimg.cn/mw690/71d9c3dcgw1faq6ou2207j20qo0zkdj6.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="拾言堂">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2018/02/25/gradle版本冲突/" itemprop="url">gradle版本冲突</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-02-25T10:22:58+08:00">
+                2018-02-25
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+             <span id="/2018/02/25/gradle版本冲突/" class="leancloud_visitors" data-flag-title="gradle版本冲突">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">阅读次数&#58;</span>
+               
+                 <span class="leancloud-visitors-count"></span>
+             </span>
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h3 id="Transitive"><a href="#Transitive" class="headerlink" title="Transitive"></a>Transitive</h3><p>gradle的依赖管理默认具有传递性，A依赖B，B依赖C，则A依赖C。</p>
+<p>也可以将这项配置关闭，这样A所依赖的B和C需要手动添加。</p>
+<figure class="highlight groovy"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//整个项目取消依赖传递</span></span><br><span class="line">configurations.all &#123;</span><br><span class="line">  transitive = <span class="literal">false</span></span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">//单个依赖取消依赖传递</span></span><br><span class="line">dependencies &#123;</span><br><span class="line">  compile (<span class="string">'group:name:version'</span>) &#123;</span><br><span class="line">    transitive = <span class="literal">false</span></span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="依赖冲突"><a href="#依赖冲突" class="headerlink" title="依赖冲突"></a>依赖冲突</h3><p>如果D也依赖C，而且B依赖的C的版本为1.0，D依赖的C的版本为2.0</p>
+<p>gradle会如何选择？</p>
+<p>默认选择最新版本，不会报错。所以在默认配置下，依赖会生产冲突。</p>
+<p>依赖冲突的解决方法应该是定制化的。</p>
+<ul>
+<li><h4 id="Force"><a href="#Force" class="headerlink" title="Force"></a>Force</h4><p>强制设置某个版本</p>
+<figure class="highlight groovy"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//整个项目统一使用某个版本</span></span><br><span class="line">configurations.all &#123;</span><br><span class="line">  resolutionStrategy &#123;</span><br><span class="line">    force <span class="string">'group:c:1.0'</span></span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">//特定依赖使用某个版本</span></span><br><span class="line">dependencies &#123;</span><br><span class="line">  compile (<span class="string">'group:B:version'</span>) &#123;</span><br><span class="line">    force <span class="string">'group:C:1.0'</span></span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>​</p>
+</li>
+<li><h4 id="exclude"><a href="#exclude" class="headerlink" title="exclude"></a>exclude</h4></li>
+</ul>
+<p>去除某个依赖，其实就会使用没有去处的依赖的版本，也可以使依赖一致。</p>
+<figure class="highlight groovy"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">dependencies &#123;</span><br><span class="line">  compile (<span class="string">'group:D:version) &#123;</span></span><br><span class="line"><span class="string">    exclude '</span><span class="string">group:</span>C<span class="string">'</span></span><br><span class="line"><span class="string">  &#125;</span></span><br><span class="line"><span class="string">&#125;</span></span><br></pre></td></tr></table></figure>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://ratelgogo.github.io/2018/02/11/静态方法存在的意义/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="张若凡">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="http://ww2.sinaimg.cn/mw690/71d9c3dcgw1faq6ou2207j20qo0zkdj6.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="拾言堂">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2018/02/11/静态方法存在的意义/" itemprop="url">静态方法存在的意义</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-02-11T14:24:13+08:00">
+                2018-02-11
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+             <span id="/2018/02/11/静态方法存在的意义/" class="leancloud_visitors" data-flag-title="静态方法存在的意义">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">阅读次数&#58;</span>
+               
+                 <span class="leancloud-visitors-count"></span>
+             </span>
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://ratelgogo.github.io/2018/02/10/为什么用Token/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="张若凡">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="http://ww2.sinaimg.cn/mw690/71d9c3dcgw1faq6ou2207j20qo0zkdj6.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="拾言堂">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2018/02/10/为什么用Token/" itemprop="url">为什么用Token</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-02-10T13:40:12+08:00">
+                2018-02-10
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+             <span id="/2018/02/10/为什么用Token/" class="leancloud_visitors" data-flag-title="为什么用Token">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">阅读次数&#58;</span>
+               
+                 <span class="leancloud-visitors-count"></span>
+             </span>
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://ratelgogo.github.io/2018/02/10/Autowired和Resource注解的区别/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="张若凡">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="http://ww2.sinaimg.cn/mw690/71d9c3dcgw1faq6ou2207j20qo0zkdj6.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="拾言堂">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2018/02/10/Autowired和Resource注解的区别/" itemprop="url">@Autowired和@Resource</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-02-10T13:37:14+08:00">
+                2018-02-10
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+             <span id="/2018/02/10/Autowired和Resource注解的区别/" class="leancloud_visitors" data-flag-title="@Autowired和@Resource">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">阅读次数&#58;</span>
+               
+                 <span class="leancloud-visitors-count"></span>
+             </span>
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://ratelgogo.github.io/2018/01/24/两只小猪/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="张若凡">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="http://ww2.sinaimg.cn/mw690/71d9c3dcgw1faq6ou2207j20qo0zkdj6.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="拾言堂">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2018/01/24/两只小猪/" itemprop="url">未命名</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-01-24T11:27:25+08:00">
+                2018-01-24
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+             <span id="/2018/01/24/两只小猪/" class="leancloud_visitors" data-flag-title="">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">阅读次数&#58;</span>
+               
+                 <span class="leancloud-visitors-count"></span>
+             </span>
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h2 id="两只小猪"><a href="#两只小猪" class="headerlink" title="两只小猪"></a>两只小猪</h2><p>在一个猪场里，两只小猪诞生了。</p>
+<p>猪大从小就知道自己要做一只土猪，可以在更好的环境中生活，每天吃蔬菜水果。于是，他每天控制食量，坚持锻炼。终于在选拔的时候，成功地被选为土猪，进去土猪基地生活。而猪二却相反，他觉得猪就应该每天吃吃睡睡喝喝，有空的时候看看隔壁的小花猪猪，每天活得那么累，还是猪么？虽然在和猪大的聊天中，也挺羡慕猪大现在的生活，可是他很清楚自己最想要的是什么。</p>
+<p>一晃几年过去了，猪大和猪二在超市的生鲜部重逢。一个贴着土猪50元/斤，一个贴着家猪13元/斤。</p>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://ratelgogo.github.io/2018/01/02/jwt-in-action/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="张若凡">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="http://ww2.sinaimg.cn/mw690/71d9c3dcgw1faq6ou2207j20qo0zkdj6.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="拾言堂">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2018/01/02/jwt-in-action/" itemprop="url">jwt-in-action</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-01-02T22:27:21+08:00">
+                2018-01-02
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+             <span id="/2018/01/02/jwt-in-action/" class="leancloud_visitors" data-flag-title="jwt-in-action">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">阅读次数&#58;</span>
+               
+                 <span class="leancloud-visitors-count"></span>
+             </span>
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="https://ratelgogo.github.io/2018/01/01/2018第一天/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -331,6 +1269,28 @@
             
           </span>
 
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/感想/" itemprop="url" rel="index">
+                    <span itemprop="name">感想</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
           
 
           
@@ -709,1130 +1669,11 @@
 
 
     
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://ratelgogo.github.io/2017/11/21/test/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="张若凡">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="http://ww2.sinaimg.cn/mw690/71d9c3dcgw1faq6ou2207j20qo0zkdj6.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="拾言堂">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2017/11/21/test/" itemprop="url">test</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-11-21T16:01:26+08:00">
-                2017-11-21
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-
-          
-            
-          
-
-          
-          
-             <span id="/2017/11/21/test/" class="leancloud_visitors" data-flag-title="test">
-               <span class="post-meta-divider">|</span>
-               <span class="post-meta-item-icon">
-                 <i class="fa fa-eye"></i>
-               </span>
-               
-                 <span class="post-meta-item-text">阅读次数&#58;</span>
-               
-                 <span class="leancloud-visitors-count"></span>
-             </span>
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://ratelgogo.github.io/2017/06/21/vim插件之surround-vim/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="张若凡">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="http://ww2.sinaimg.cn/mw690/71d9c3dcgw1faq6ou2207j20qo0zkdj6.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="拾言堂">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2017/06/21/vim插件之surround-vim/" itemprop="url">vim插件之surround.vim</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-06-21T17:08:27+08:00">
-                2017-06-21
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/code/" itemprop="url" rel="index">
-                    <span itemprop="name">code</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-          
-             <span id="/2017/06/21/vim插件之surround-vim/" class="leancloud_visitors" data-flag-title="vim插件之surround.vim">
-               <span class="post-meta-divider">|</span>
-               <span class="post-meta-item-icon">
-                 <i class="fa fa-eye"></i>
-               </span>
-               
-                 <span class="post-meta-item-text">阅读次数&#58;</span>
-               
-                 <span class="leancloud-visitors-count"></span>
-             </span>
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <h1 id="SURROUND-VIM"><a href="#SURROUND-VIM" class="headerlink" title="SURROUND.VIM"></a>SURROUND.VIM</h1><p><a href="https://github.com/tpope/vim-surround" target="_blank" rel="noopener">surround.vim</a> 可以快速的选择修改在包围里面的字符串，例如冒号，引号，大括号等</p>
-<h3 id="主要命令"><a href="#主要命令" class="headerlink" title="主要命令"></a>主要命令</h3><ul>
-<li><code>cs</code> 修改</li>
-<li><code>ds</code> 删除</li>
-<li><code>ys</code> 添加</li>
-</ul>
-<h3 id="常用例子"><a href="#常用例子" class="headerlink" title="常用例子"></a>常用例子</h3><p>废话不多说，上代码:<br>假设有一段字符: <code>&quot;hello vim!&quot;</code></p>
-<p>输入<code>cs&quot;&#39;</code><br>变成<code>&#39;hello vim!&#39;</code></p>
-<p><code>cs&#39;&lt;q&gt;</code><br>=&gt; <code>&lt;q&gt;hello vim!&lt;/q&gt;</code></p>
-<p><code>cst&quot;</code>(当包围是多个字符时)<br>=&gt; <code>&quot;hello vim!&quot;</code></p>
-<p><code>ds&quot;</code>去除”<br>=&gt; <code>hello vim!</code></p>
-<p><code>ysiw[</code>iw是一个单词，这里可以使用任何选择<br>=&gt; <code>[ hello ] vim!</code></p>
-<p>在选择模式下输入S+你需要包围的字符串</p>
-<h3 id="补充"><a href="#补充" class="headerlink" title="补充"></a>补充</h3><ul>
-<li>[和{ 是带空格的，]和}不带空格</li>
-<li>如果你需要使用到<code>.</code>命令来重复上面的命令，则需要再添加一个插件<a href="https://github.com/tpope/vim-repeat" target="_blank" rel="noopener">vim-repeat</a></li>
-</ul>
-
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://ratelgogo.github.io/2017/06/20/vim之学习用帮助/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="张若凡">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="http://ww2.sinaimg.cn/mw690/71d9c3dcgw1faq6ou2207j20qo0zkdj6.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="拾言堂">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2017/06/20/vim之学习用帮助/" itemprop="url">vim之学习用帮助</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-06-20T15:09:30+08:00">
-                2017-06-20
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/code/" itemprop="url" rel="index">
-                    <span itemprop="name">code</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-          
-             <span id="/2017/06/20/vim之学习用帮助/" class="leancloud_visitors" data-flag-title="vim之学习用帮助">
-               <span class="post-meta-divider">|</span>
-               <span class="post-meta-item-icon">
-                 <i class="fa fa-eye"></i>
-               </span>
-               
-                 <span class="post-meta-item-text">阅读次数&#58;</span>
-               
-                 <span class="leancloud-visitors-count"></span>
-             </span>
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <h2 id="开始使用"><a href="#开始使用" class="headerlink" title="开始使用"></a>开始使用</h2><ul>
-<li>在命令模式下输入<code>:help</code>开始使用帮助</li>
-<li>输入<code>:h pattern</code>查看pattern的使用帮助</li>
-</ul>
-<h3 id="链接"><a href="#链接" class="headerlink" title="链接"></a>链接</h3><ul>
-<li><kbd>Ctrl + ]</kbd> 进行超链接跳转</li>
-<li><kbd>Ctrl + o</kbd> 跳转到较旧的光标的位置</li>
-<li><kbd>Ctrl + T</kbd> 跳转到上一个链接处</li>
-</ul>
-<h3 id="上下文"><a href="#上下文" class="headerlink" title="上下文"></a>上下文</h3><p>每个帮助主题都有上下文</p>
-<table>
-<thead>
-<tr>
-<th style="text-align:center">前缀</th>
-<th style="text-align:center">例子</th>
-<th style="text-align:center">上下文</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td style="text-align:center"><code>:</code></td>
-<td style="text-align:center"><code>:h :r</code></td>
-<td style="text-align:center">命令模式下以冒号开始的命令</td>
-</tr>
-<tr>
-<td style="text-align:center">无</td>
-<td style="text-align:center"><code>:h r</code></td>
-<td style="text-align:center">normal mode</td>
-</tr>
-<tr>
-<td style="text-align:center"><code>v_</code></td>
-<td style="text-align:center"><code>:h v_r</code></td>
-<td style="text-align:center">visual mode</td>
-</tr>
-<tr>
-<td style="text-align:center"><code>i_</code></td>
-<td style="text-align:center"><code>:h i_CTRL-W</code></td>
-<td style="text-align:center">insert mode</td>
-</tr>
-<tr>
-<td style="text-align:center"><code>c_</code></td>
-<td style="text-align:center"><code>:h c_CTRL-R</code></td>
-<td style="text-align:center">ex command line</td>
-</tr>
-<tr>
-<td style="text-align:center"><code>/</code></td>
-<td style="text-align:center"><code>:h /\r</code></td>
-<td style="text-align:center">正则搜索帮助</td>
-</tr>
-<tr>
-<td style="text-align:center"><code>&#39;</code></td>
-<td style="text-align:center"><code>:h &#39;ro&#39;</code></td>
-<td style="text-align:center">选项，这里表示以readonly的方式打开</td>
-</tr>
-<tr>
-<td style="text-align:center"><code>-</code></td>
-<td style="text-align:center"><code>:h -r</code></td>
-<td style="text-align:center">参数</td>
-</tr>
-</tbody>
-</table>
-<p>如果你知道 <kbd>ctrl+r</kbd> ，只要在命令行中输入<code>:h ctrl-r</code>,然后再按<kbd>ctrl+d</kbd>,vim 会列出所有不同上下文的关键字</p>
-
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://ratelgogo.github.io/2017/06/13/shortcat使用心得/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="张若凡">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="http://ww2.sinaimg.cn/mw690/71d9c3dcgw1faq6ou2207j20qo0zkdj6.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="拾言堂">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2017/06/13/shortcat使用心得/" itemprop="url">shortcat使用心得</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-06-13T15:22:21+08:00">
-                2017-06-13
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/mac/" itemprop="url" rel="index">
-                    <span itemprop="name">mac</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-          
-             <span id="/2017/06/13/shortcat使用心得/" class="leancloud_visitors" data-flag-title="shortcat使用心得">
-               <span class="post-meta-divider">|</span>
-               <span class="post-meta-item-icon">
-                 <i class="fa fa-eye"></i>
-               </span>
-               
-                 <span class="post-meta-item-text">阅读次数&#58;</span>
-               
-                 <span class="leancloud-visitors-count"></span>
-             </span>
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <p>官网地址: <a href="https://shortcatapp.com/" target="_blank" rel="noopener">shortcat</a></p>
-<blockquote>
-<p>kill mice, one at a time.</p>
-</blockquote>
-<p>过度使用trackpad之后，感觉手很累，效率也比较低，开始慢慢成为了键盘党，从此以后手也轻松了，心也舒畅了，妹子们也纷纷投来了崇拜的目光！</p>
-<p>shortcat能支持绝大多数的应用，基本可以做到脱离鼠标，使我们的效率更高。</p>
-<p><img src="http://ww1.sinaimg.cn/large/71d9c3dcgy1fgkleq6ng4g20ik0gmasa.gif" alt=""></p>
-<h2 id="常用技巧"><a href="#常用技巧" class="headerlink" title="常用技巧"></a>常用技巧</h2><ul>
-<li>⎡ ⇧ + ⌘ + space ⎦ 快捷键</li>
-<li>支持中文，可以直接打拼音</li>
-<li>英文标点. 显示所有可以点击的区域, .button 显示所有可以点击的按钮</li>
-<li>快速按下2次enter键可以模拟双击</li>
-</ul>
-
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://ratelgogo.github.io/2017/02/15/vim常用操作/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="张若凡">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="http://ww2.sinaimg.cn/mw690/71d9c3dcgw1faq6ou2207j20qo0zkdj6.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="拾言堂">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2017/02/15/vim常用操作/" itemprop="url">vim常用操作</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-02-15T11:46:22+08:00">
-                2017-02-15
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-
-          
-            
-          
-
-          
-          
-             <span id="/2017/02/15/vim常用操作/" class="leancloud_visitors" data-flag-title="vim常用操作">
-               <span class="post-meta-divider">|</span>
-               <span class="post-meta-item-icon">
-                 <i class="fa fa-eye"></i>
-               </span>
-               
-                 <span class="post-meta-item-text">阅读次数&#58;</span>
-               
-                 <span class="leancloud-visitors-count"></span>
-             </span>
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          <h1 id="Vim快捷键"><a href="#Vim快捷键" class="headerlink" title="Vim快捷键"></a>Vim快捷键</h1><hr>
-<h2 id="光标移动"><a href="#光标移动" class="headerlink" title="光标移动"></a>光标移动</h2><p><a href="http://vimcdoc.sourceforge.net/doc/usr_03.html#usr_03.txt" target="_blank" rel="noopener">vim移动光标文档</a></p>
-<h3 id="在文件中移动"><a href="#在文件中移动" class="headerlink" title="在文件中移动"></a>在文件中移动</h3><ul>
-<li><code>gg</code> 移动到第一行</li>
-<li><code>GG</code> 移动到最后一行</li>
-<li>命令<code>G</code>前面加上数字n即跳转到第n行。</li>
-<li>命令<code>n%</code>即按百分比跳转，<code>50%</code>-&gt;文档中间😄
-          <!--noindex-->
-          <div class="post-button text-center">
-            <a class="btn" href="/2017/02/15/vim常用操作/#more" rel="contents">
-              阅读全文 &raquo;
-            </a>
-          </div>
-          <!--/noindex-->
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://ratelgogo.github.io/2016/12/16/Alfred-iTerm2/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="张若凡">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="http://ww2.sinaimg.cn/mw690/71d9c3dcgw1faq6ou2207j20qo0zkdj6.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="拾言堂">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2016/12/16/Alfred-iTerm2/" itemprop="url">Alfred-iTerm2</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2016-12-16T11:36:27+08:00">
-                2016-12-16
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-
-          
-            
-          
-
-          
-          
-             <span id="/2016/12/16/Alfred-iTerm2/" class="leancloud_visitors" data-flag-title="Alfred-iTerm2">
-               <span class="post-meta-divider">|</span>
-               <span class="post-meta-item-icon">
-                 <i class="fa fa-eye"></i>
-               </span>
-               
-                 <span class="post-meta-item-text">阅读次数&#58;</span>
-               
-                 <span class="leancloud-visitors-count"></span>
-             </span>
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <h1 id="Alfred-中将iTerm2-设置成默认的terminal"><a href="#Alfred-中将iTerm2-设置成默认的terminal" class="headerlink" title="Alfred 中将iTerm2 设置成默认的terminal"></a>Alfred 中将iTerm2 设置成默认的terminal</h1><ul>
-<li>打开<code>Alfred Preferences</code>  - <code>Features</code> - <code>Terminal / Shell</code></li>
-<li>更改<code>Application</code>为<code>Customer</code></li>
-<li>替换成以下代码:</li>
-</ul>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">on alfred_script(q)</span><br><span class="line">tell application "System Events"</span><br><span class="line">    tell application "iTerm2"</span><br><span class="line">        create window with default profile</span><br><span class="line">        delay 0.5</span><br><span class="line">        tell current session of current window</span><br><span class="line">            write text q</span><br><span class="line">        end tell</span><br><span class="line">    end tell</span><br><span class="line">end tell</span><br><span class="line"></span><br><span class="line">end alfred_script</span><br></pre></td></tr></table></figure>
-<p>👌</p>
-<p><a href="&#39;https://github.com/tridays/alfred-iterm2&#39;">参考</a></p>
-
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://ratelgogo.github.io/2016/12/14/css实现文本截断/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="张若凡">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="http://ww2.sinaimg.cn/mw690/71d9c3dcgw1faq6ou2207j20qo0zkdj6.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="拾言堂">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2016/12/14/css实现文本截断/" itemprop="url">css实现文本截断</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2016-12-14T17:09:35+08:00">
-                2016-12-14
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-
-          
-            
-          
-
-          
-          
-             <span id="/2016/12/14/css实现文本截断/" class="leancloud_visitors" data-flag-title="css实现文本截断">
-               <span class="post-meta-divider">|</span>
-               <span class="post-meta-item-icon">
-                 <i class="fa fa-eye"></i>
-               </span>
-               
-                 <span class="post-meta-item-text">阅读次数&#58;</span>
-               
-                 <span class="leancloud-visitors-count"></span>
-             </span>
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <p><code>text-overflow: clip|ellipsis|string</code></p>
-<table>
-<thead>
-<tr>
-<th>值</th>
-<th>描述</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>clip</td>
-<td>修剪文本直接截断</td>
-</tr>
-<tr>
-<td>ellipsis</td>
-<td>用省略号代替截断的字符串</td>
-</tr>
-<tr>
-<td>string</td>
-<td>使用给出的字符串来代替截断的字符串(<a href="&quot;https://developer.mozilla.org/en-US/docs/Web/CSS/text-overflow&quot;">兼容性差,只有火狐支持</a>)</td>
-</tr>
-</tbody>
-</table>
-<p>here we go</p>
-<iframe scrolling="no" width="100%" height="300" src="//jsfiddle.net/b08zsgqd/2/embedded/js,resources,html,css,result/light" frameborder="0" allowfullscreen></iframe>
-<blockquote>
-<ul>
-<li>clip 会比 ellipsis 显示更多的字符</li>
-<li><code>display</code>需要是<code>block</code></li>
-<li>配合<code>white-space: nowrap</code> 强制不换行来使用</li>
-</ul>
-</blockquote>
-
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
   </section>
 
   
   <nav class="pagination">
-    <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><a class="extend next" rel="next" href="/page/2/"><i class="fa fa-angle-right"></i></a>
+    <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><a class="page-number" href="/page/3/">3</a><a class="extend next" rel="next" href="/page/2/"><i class="fa fa-angle-right"></i></a>
   </nav>
 
 
@@ -1882,7 +1723,7 @@
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">15</span>
+                  <span class="site-state-item-count">21</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
@@ -1893,7 +1734,7 @@
               
               <div class="site-state-item site-state-categories">
                 <a href="/categories/index.html">
-                  <span class="site-state-item-count">3</span>
+                  <span class="site-state-item-count">4</span>
                   <span class="site-state-item-name">分类</span>
                 </a>
               </div>
@@ -1904,7 +1745,7 @@
               
               <div class="site-state-item site-state-tags">
                 <a href="/tags/index.html">
-                  <span class="site-state-item-count">20</span>
+                  <span class="site-state-item-count">23</span>
                   <span class="site-state-item-name">标签</span>
                 </a>
               </div>
